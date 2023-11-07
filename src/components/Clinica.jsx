@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
     cardContent: {
         width: '100%',
         backgroundColor: '#FAF3F0',
+        borderRadius: 0
     },
     contenedorBoton: {
         alignItems: 'center'
