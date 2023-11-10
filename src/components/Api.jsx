@@ -220,7 +220,7 @@ class NuevoEquipo extends React.Component {
                                 save="value"
                             />
                         </View>
-                        <View style={styles.contenedorBoton}>
+                        <View style={{marginTop: 20,marginLeft: 'auto',marginRight: 'auto',}}>
                             <Button mode='outlined' onPress={() => this.registrarEquipo()}>Registrar</Button>
                         </View>
                     </Card.Content>
