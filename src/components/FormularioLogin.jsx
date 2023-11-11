@@ -1,20 +1,56 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View,TouchableOpacity } from 'react-native'
 import { TextInput, Button } from "react-native-paper";
+import { validateEmail } from '../utils/validations';
+import { initializeApp } from '../utils/firebase';
 import { Text } from '@rneui/themed';
 
-export default function FormularioLogin() {
+export default function FormularioLogin(props) {
+    const { changeForm } = props;
+    const [formData, setFormData] = useState(defaultValue());
+    const [formError, setFormError] = useState({});
+
+    const login = () => {
+        let errors = {};
+        if (!formData.email || !formData.password) {
+            if (!formData.email) errors.email = true;
+            if (!formData.password) errors.password = true;
+        } else if (!validateEmail(formData.email)) {
+            errors.email = true;
+        } else {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(formData.email, formData.password)
+                .catch(() => {
+                    setFormError({
+                        email: true,
+                        password: true,
+                    });
+                });
+        }
+        setFormError(errors);
+    };
+    function defaultValue() {
+        return {
+            email: '',
+            password: '',
+        };
+    }
+    const onChange = (e, type) => {
+        setFormData({ ...formData, [type]: e.nativeEvent.text });
+    };
+
     return (
         <View style={styles.container}>
-            <Text h1>Sign in to your account</Text>
+            <Text h1>Inicia sesión en tu cuenta</Text>
             <TextInput
                 style={styles.textbox}
                 mode="outlined"
-                placeholder="Email*"
+                placeholder="Correo*"
             />
             <TextInput
                 style={styles.textbox}
-                placeholder="Password*"
+                placeholder="Contraseña*"
                 secureTextEntry
                 mode="outlined"
             />
@@ -25,14 +61,12 @@ export default function FormularioLogin() {
                     onEmailAndPasswordLogin();
                 }}
             >
-                Sign in
+                Iniciar sesión
             </Button>
-            <Text>or</Text>
-
             <View style={styles.linkContainer}>
-                <Text style={styles.text}>Don&apos;t you have an account yet?</Text>
-                <Button onPress={()=>(console.log('Registrando'))} style={styles.linkBtn}>
-                    Sign up
+                <Text style={styles.text}>No tienes una cuenta aún?</Text>
+                <Button onPress={changeForm} style={styles.linkBtn}>
+                    Registrate
                 </Button>
             </View>
         </View>

@@ -1,40 +1,96 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TextInput, Button } from "react-native-paper";
+import { validateEmail } from '../utils/validations';
+import {auth} from '@react-native-firebase/auth'
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
+import {initializeApp} from 'firebase/app';
+import {firebaseConfig} from '../utils/firebase';
 import { Text } from '@rneui/themed';
 
-export default function FormularioRegistro() {
+export default function FormularioRegistro(props) {
+    const { changeForm } = props;
+    const [formData, setFormData] = useState(defaultValue());
+    const [formError, setFormError] = useState({});
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    
+    const registro = () => {
+        console.log("Me has presionado papa");
+        let errors = {};
+        if (!formData.email || !formData.password || !formData.repeatPassword) {
+            if (!formData.email) errors.email = true;
+            if (!formData.password) errors.password = true;
+            if (!formData.repeatPassword) errors.repeatPassword = true;
+        } else if (!validateEmail(formData.email)) {
+            errors.email = true;
+        } else if (formData.password !== formData.repeatPassword) {
+            errors.password = true;
+            errors.repeatPassword = true;
+        } else if (formData.password.length < 6) {
+            errors.password = true;
+            errors.repeatPassword = true;
+        } else {
+                createUserWithEmailAndPassword(auth,formData.email, formData.password)
+                .then(()=>{
+                    console.log("Cuenta creada!")
+                })
+                .catch(() => {
+                    setFormError({
+                        email: true,
+                        password: true,
+                        repeatPassword: true,
+                    });
+                });
+        }
+        setFormError(errors);
+    };
+
+    function defaultValue() {
+        return {
+          email: '',
+          password: '',
+          repeatPassword: '',
+        };
+      }
+
     return (
         <View style={styles.container}>
-            <Text h1>Create an account</Text>
+            <Text h1>Crear una cuenta</Text>
             <TextInput
                 keyboardType="email-address"
                 style={styles.textbox}
                 mode="outlined"
-                placeholder="Email*"
+                placeholder="Correo*"
+                onChange={(value)=> 
+                    setFormData({...formData, email: value.nativeEvent.text})}
             />
             <TextInput
                 style={styles.textbox}
                 mode="outlined"
-                placeholder="Password*"
+                placeholder="Contraseña*"
                 secureTextEntry
+                onChange={(value)=> 
+                    setFormData({...formData, password: value.nativeEvent.text})}
             />
             <TextInput
                 style={styles.textbox}
                 mode="outlined"
-                placeholder="Repeat password*"
+                placeholder="Repetir Contraseña*"
                 secureTextEntry
+                onChange={(value)=> 
+                    setFormData({...formData, repeatPassword: value.nativeEvent.text})}
             />
             <Button
                 style={styles.button}
                 mode="contained"
-            >
-                Sign up
+                onPress={registro}
+            >Registrar
             </Button>
             <View style={styles.linkContainer}>
-                <Text style={styles.text}>Already have an account?</Text>
-                <Button onPress={() => (console.log('Registrando'))} style={styles.linkBtn}>
-                    Sign in
+                <Text style={styles.text}>Ya tienes una cuenta?</Text>
+                <Button onPress={changeForm} style={styles.linkBtn}>
+                    Inicia sesión
                 </Button>
             </View>
         </View>
