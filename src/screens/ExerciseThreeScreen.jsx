@@ -10,5 +10,3 @@ export default function ExerciseThreeScreen() {
         <Api/>
     )
 }
-
-const styles = StyleSheet.create({})

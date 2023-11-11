@@ -7,5 +7,3 @@ export default function SettingsScreen() {
     <Settings/>
   )
 }
-
-const styles = StyleSheet.create({})

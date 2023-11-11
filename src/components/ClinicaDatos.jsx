@@ -1,6 +1,5 @@
-import { View } from "react-native";
 import { StyleSheet } from "react-native";
-import { TextInput, Text, Card, DataTable } from "react-native-paper";
+import { Text, Card, DataTable } from "react-native-paper";
 
 export function ClinicaDatos({ route, navigation }) {
 

@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
-import { StyleSheet, View,TouchableOpacity } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { TextInput, Button } from "react-native-paper";
 import { validateEmail } from '../utils/validations';
-import { initializeApp } from '../utils/firebase';
+import { getAuth,signInWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../utils/firebase';
 import { Text } from '@rneui/themed';
 
 export default function FormularioLogin(props) {
     const { changeForm } = props;
     const [formData, setFormData] = useState(defaultValue());
     const [formError, setFormError] = useState({});
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
     const login = () => {
         let errors = {};
@@ -18,9 +23,17 @@ export default function FormularioLogin(props) {
         } else if (!validateEmail(formData.email)) {
             errors.email = true;
         } else {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(formData.email, formData.password)
+            signInWithEmailAndPassword(auth, formData.email, formData.password)
+                .then(() => {
+                    Alert.alert(
+                        'Success',
+                        'Sesión Iniciada',
+                        [{
+                            text: 'Ok'
+                        }]
+                    )
+                    console.log("Se inicio sesion!")
+                })
                 .catch(() => {
                     setFormError({
                         email: true,
@@ -47,18 +60,20 @@ export default function FormularioLogin(props) {
                 style={styles.textbox}
                 mode="outlined"
                 placeholder="Correo*"
+                onChange={(value) => onChange(value, 'email')}
             />
             <TextInput
                 style={styles.textbox}
                 placeholder="Contraseña*"
                 secureTextEntry
                 mode="outlined"
+                onChange={(value) => onChange(value, 'password')}
             />
             <Button
                 style={styles.button}
                 mode="contained"
                 onPress={() => {
-                    onEmailAndPasswordLogin();
+                    login();
                 }}
             >
                 Iniciar sesión

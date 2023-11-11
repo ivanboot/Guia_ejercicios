@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native'
+import { StatusBar, LogBox } from 'react-native';
+import { NavigationContainer,} from '@react-navigation/native'
 import { NavigationTab } from './src/navigation/NavigationTab';
-import FormularioLogin from './src/components/FormularioLogin';
-import FormularioRegistro from './src/components/FormularioRegistro';
 import { auth } from '@react-native-firebase/auth'
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from './src/utils/firebase';
 
+import Auth from './src/components/Auth';
+
+LogBox.ignoreAllLogs(['Setting a timer']);
 export default function App() {
 
   const [user, setUser] = useState(undefined);
@@ -16,7 +17,7 @@ export default function App() {
   const auth = getAuth(app);
 
   useEffect(() => {
-    onAuthStateChanged((response) => {
+    onAuthStateChanged(auth, (response) => {
       setUser(response);
     });
   }, []);
@@ -34,11 +35,6 @@ export default function App() {
         :
         <Auth />
       }
-
-      {/*  <FormularioLogin/> */}
-      {/* <NavigationContainer>
-        <NavigationTab/>
-      </NavigationContainer> */}
     </>
   );
 }

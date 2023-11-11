@@ -9,4 +9,3 @@ export default function ExerciseTwoScreen() {
   )
 }
 
-const styles = StyleSheet.create({})

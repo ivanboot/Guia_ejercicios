@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { View } from 'react-native'
 import FormularioLogin from './FormularioLogin'
 import FormularioRegistro from './FormularioRegistro'
-import { initializeApp } from '../utils/firebase';
 
 export default function Auth() {
     const [isLogin, setIsLogin] = useState(true)

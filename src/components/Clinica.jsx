@@ -209,20 +209,14 @@ export default function Clinica(props) {
 const styles = StyleSheet.create({
     cardContent: {
         width: '100%',
-        backgroundColor: '#FAF3F0',
         borderRadius: 0
     },
     contenedorBoton: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10,
     },
     formControl: {
         marginTop: 10
-    },
-    vistaModal: {
-        flex: 1,
-        width: 'auto',
-        backgroundColor: '#000000aa',
-
     },
     label: {
         fontWeight: 'bold',
@@ -235,13 +229,5 @@ const styles = StyleSheet.create({
         borderColor: '#e1e1e1',
         borderWidth: 1,
         borderStyle: 'solid'
-    },
-    Modal: {
-
-        backgroundColor: '#fff',
-        margin: 10,
-        padding: 20,
-        borderRadius: 10,
-
     },
 });

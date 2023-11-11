@@ -54,7 +54,7 @@ export default function ConsultaIp() {
             await AsyncStorage.setItem('resultados', JSON.stringify(actualizandoHistorial))
             setResultados(actualizandoHistorial)
         } catch (error) {
-            console.log('Error al almacenar informacion de la IP: ', error);
+            console.log('Error al almacenar información de la IP: ', error);
         }
     }
 
@@ -68,7 +68,7 @@ export default function ConsultaIp() {
             //Actualizando el historial cargado
             setResultados(dataAlmacenada)
         } catch (error) {
-            console.log('Error al cargar la informacion: ', error);
+            console.log('Error al cargar la información: ', error);
         }
     }
 
@@ -130,13 +130,14 @@ export default function ConsultaIp() {
                                     <View style={styles.cardContainer}>
                                         <View style={styles.contenedorImage}>
                                             <Text variant="labelLarge" style={{ color: 'white' }}>{item.country}</Text>
+                                            <Text variant="labelLarge" style={{ color: 'white' }}>{item.ip}</Text>
                                         </View>
                                         <View style={styles.contenedorInfo}>
                                             <Card.Content>
                                                 <Text variant="bodyLarge">Tipo: <Text variant="labelLarge">{item.type}</Text> </Text>
                                                 <Text variant="bodyLarge">Continente: <Text variant="labelLarge">{item.continent}</Text> </Text>
-                                                <Text variant="bodyLarge">Codigo Pais: <Text variant="labelLarge">{item.country_code}</Text> </Text>
-                                                <Text variant="bodyLarge">Region: <Text variant="labelLarge">{item.region}</Text> </Text>
+                                                <Text variant="bodyLarge">Código País: <Text variant="labelLarge">{item.country_code}</Text> </Text>
+                                                <Text variant="bodyLarge">Región: <Text variant="labelLarge">{item.region}</Text> </Text>
                                                 <Text variant="bodyLarge">Ciudad: <Text variant="labelLarge">{item.city}</Text> </Text>
                                                 <Text variant="bodyLarge">Capital: <Text variant="labelLarge">{item.capital}</Text> </Text>
                                             </Card.Content>
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
-        //alignItems: 'center',
         marginVertical: 10
     },
     boton: {
@@ -197,20 +197,11 @@ const styles = StyleSheet.create({
         padding: 3,
         marginRight: 5,
     },
-    image: {
-        width: 60,
-        height: 60,
-        borderRadius: 75
-    },
     contenedorInfo: {
         flex: 3,
         marginLeft: 10,
         marginTop: 'auto',
         marginBottom: 'auto'
-    },
-    descripcion: {
-        textAlign: 'left',
-        marginBottom: 5,
     },
     loading: {
         marginTop: 5

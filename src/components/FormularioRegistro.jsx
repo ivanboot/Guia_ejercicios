@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TextInput, Button } from "react-native-paper";
 import { validateEmail } from '../utils/validations';
-import {auth} from '@react-native-firebase/auth'
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
-import {initializeApp} from 'firebase/app';
-import {firebaseConfig} from '../utils/firebase';
+import { auth } from '@react-native-firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../utils/firebase';
 import { Text } from '@rneui/themed';
 
 export default function FormularioRegistro(props) {
@@ -14,9 +14,8 @@ export default function FormularioRegistro(props) {
     const [formError, setFormError] = useState({});
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    
+
     const registro = () => {
-        console.log("Me has presionado papa");
         let errors = {};
         if (!formData.email || !formData.password || !formData.repeatPassword) {
             if (!formData.email) errors.email = true;
@@ -31,8 +30,15 @@ export default function FormularioRegistro(props) {
             errors.password = true;
             errors.repeatPassword = true;
         } else {
-                createUserWithEmailAndPassword(auth,formData.email, formData.password)
-                .then(()=>{
+            createUserWithEmailAndPassword(auth, formData.email, formData.password)
+                .then(() => {
+                    Alert.alert(
+                        'Success',
+                        '¡Registro Exitoso!',
+                        [{
+                            text: 'Ok'
+                        }]
+                    )
                     console.log("Cuenta creada!")
                 })
                 .catch(() => {
@@ -48,11 +54,11 @@ export default function FormularioRegistro(props) {
 
     function defaultValue() {
         return {
-          email: '',
-          password: '',
-          repeatPassword: '',
+            email: '',
+            password: '',
+            repeatPassword: '',
         };
-      }
+    }
 
     return (
         <View style={styles.container}>
@@ -62,24 +68,24 @@ export default function FormularioRegistro(props) {
                 style={styles.textbox}
                 mode="outlined"
                 placeholder="Correo*"
-                onChange={(value)=> 
-                    setFormData({...formData, email: value.nativeEvent.text})}
+                onChange={(value) =>
+                    setFormData({ ...formData, email: value.nativeEvent.text })}
             />
             <TextInput
                 style={styles.textbox}
                 mode="outlined"
                 placeholder="Contraseña*"
                 secureTextEntry
-                onChange={(value)=> 
-                    setFormData({...formData, password: value.nativeEvent.text})}
+                onChange={(value) =>
+                    setFormData({ ...formData, password: value.nativeEvent.text })}
             />
             <TextInput
                 style={styles.textbox}
                 mode="outlined"
                 placeholder="Repetir Contraseña*"
                 secureTextEntry
-                onChange={(value)=> 
-                    setFormData({...formData, repeatPassword: value.nativeEvent.text})}
+                onChange={(value) =>
+                    setFormData({ ...formData, repeatPassword: value.nativeEvent.text })}
             />
             <Button
                 style={styles.button}
@@ -103,9 +109,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    title: {
-        top: '100%'
     },
     textbox: {
         width: '90%',

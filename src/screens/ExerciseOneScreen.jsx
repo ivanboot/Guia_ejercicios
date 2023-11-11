@@ -32,5 +32,3 @@ export default function ExerciseOneScreen() {
         </Stack.Navigator>
     )
 }
-
-const styles = StyleSheet.create({})
