@@ -98,33 +98,29 @@ class PantallaInicio extends React.Component {
             <>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.contenedorPrincipal}>
-                        <FlatList
-                            data={this.state.equipos}
-                            renderItem={({ item }) =>
-                                <TouchableOpacity
-                                    key={item.id}
-                                    //onPress = {() => this.alertItemName(item)}
-                                    onPress={() => this.props.navigation.navigate('ListaIntegrantes', item)}>
-                                    <Card style={{ marginTop: 10 }}>
-                                        <View style={styles.cardContainer}>
-                                            <View style={styles.contenedorImage}>
-                                                <Text style={{ color: 'white', textAlignVertical: 'auto' }}>
-                                                    {item.id}  Equipo: {item.nombreEquipo}
-                                                </Text>
-                                            </View>
-                                            <View style={styles.contenedorInfo}>
-                                                <Card.Content>
-                                                    <Text variant="labelLarge">Facultad: {item.facultad}</Text>
-                                                    <Text variant="labelLarge">Año: {item.anio}</Text>
-                                                    <Text variant="labelLarge">Ciclo: {item.ciclo}</Text>
-                                                    <Text variant="labelLarge">Torneo: {item.torneo}</Text>
-                                                </Card.Content>
-                                            </View>
+                        {this.state.equipos.map((item, i) => (
+                            <TouchableOpacity
+                                key={i}
+                                onPress={() => this.props.navigation.navigate('ListaIntegrantes', item)}>
+                                <Card style={{ marginTop: 10 }}>
+                                    <View style={styles.cardContainer}>
+                                        <View style={styles.contenedorImage}>
+                                            <Text style={{ color: '#FFFFFF', textAlignVertical: 'auto' }}>
+                                                {item.id}  Equipo: {item.nombreEquipo}
+                                            </Text>
                                         </View>
-                                    </Card>
-                                </TouchableOpacity>}
-                            keyExtractor={item => item.id}
-                        />
+                                        <View style={styles.contenedorInfo}>
+                                            <Card.Content>
+                                                <Text variant="labelLarge">Facultad: {item.facultad}</Text>
+                                                <Text variant="labelLarge">Año: {item.anio}</Text>
+                                                <Text variant="labelLarge">Ciclo: {item.ciclo}</Text>
+                                                <Text variant="labelLarge">Torneo: {item.torneo}</Text>
+                                            </Card.Content>
+                                        </View>
+                                    </View>
+                                </Card>
+                            </TouchableOpacity>
+                        ))}
 
                     </View>
                 </ScrollView>
@@ -133,7 +129,7 @@ class PantallaInicio extends React.Component {
                         style={styles.contenedorAgregar}
                         onPress={() => this.props.navigation.navigate('NuevoEquipo')}
                     >
-                        <Icon name="plus" size={30} color='White' />
+                        <Icon name="plus" size={30} color='#FFFFFF' />
                     </TouchableOpacity>
                 </View>
             </>
@@ -220,7 +216,7 @@ class NuevoEquipo extends React.Component {
                                 save="value"
                             />
                         </View>
-                        <View style={{marginTop: 20,marginLeft: 'auto',marginRight: 'auto',}}>
+                        <View style={{ marginTop: 20, marginLeft: 'auto', marginRight: 'auto', }}>
                             <Button mode='outlined' onPress={() => this.registrarEquipo()}>Registrar</Button>
                         </View>
                     </Card.Content>
@@ -300,36 +296,32 @@ class ListaIntegrantes extends React.Component {
                                         <Text style={{ fontWeight: 'bold', fontSize: 15, textAlign: 'center' }}>
                                             Aún puede agregar {10 - (this.state.total)} jugadores más</Text>
                                     )}
-                                <FlatList
-                                    data={this.state.integrantes}
-                                    renderItem={({ item }) =>
-                                        <TouchableOpacity
-                                            key={item.id}
-                                            //onPress = {() => this.alertItemName(item)}
-                                            onPress={() => this.props.navigation.navigate('DetalleIntegrante', item)}>
-                                            <Card style={{ marginTop: 10 }}>
-                                                <View style={styles.cardContainer}>
-                                                    <View style={styles.contenedorImage}>
-                                                        <Text style={{ color: 'white', textAlignVertical: 'auto' }}>
-                                                            Camisa: {item.numCamisa}
-                                                        </Text>
-                                                    </View>
-                                                    <View style={styles.contenedorIntegrantes}>
-                                                        <Card.Content>
-                                                            <Text variant="labelLarge">Carnet: {item.carnet}</Text>
-                                                            <Text variant="labelLarge">Nombre: {item.nombre}</Text>
-                                                            <Text variant="labelLarge">Apellido: {item.apellido}</Text>
-                                                            <Text variant="labelLarge">Fecha de Nac.: {item.fechaNac}</Text>
-                                                            <Text variant="labelLarge">Genero: {item.genero}</Text>
-                                                            <Text variant="labelLarge">Posición: {item.posicion}</Text>
-                                                        </Card.Content>
-                                                    </View>
+                                {this.state.integrantes.map((item, i) => (
+                                    <TouchableOpacity
+                                        key={i}
+                                        //onPress = {() => this.alertItemName(item)}
+                                        onPress={() => this.props.navigation.navigate('DetalleIntegrante', item)}>
+                                        <Card style={{ marginTop: 10 }}>
+                                            <View style={styles.cardContainer}>
+                                                <View style={styles.contenedorImage}>
+                                                    <Text style={{ color: 'white', textAlignVertical: 'auto' }}>
+                                                        Camisa: {item.numCamisa}
+                                                    </Text>
                                                 </View>
-                                            </Card>
-                                        </TouchableOpacity>}
-                                    keyExtractor={item => item.id}
-                                />
-
+                                                <View style={styles.contenedorIntegrantes}>
+                                                    <Card.Content>
+                                                        <Text variant="labelLarge">Carnet: {item.carnet}</Text>
+                                                        <Text variant="labelLarge">Nombre: {item.nombre}</Text>
+                                                        <Text variant="labelLarge">Apellido: {item.apellido}</Text>
+                                                        <Text variant="labelLarge">Fecha de Nac.: {item.fechaNac}</Text>
+                                                        <Text variant="labelLarge">Genero: {item.genero}</Text>
+                                                        <Text variant="labelLarge">Posición: {item.posicion}</Text>
+                                                    </Card.Content>
+                                                </View>
+                                            </View>
+                                        </Card>
+                                    </TouchableOpacity>
+                                ))}
                             </View>
                         </>
                     )
@@ -344,7 +336,7 @@ class ListaIntegrantes extends React.Component {
                             style={styles.contenedorAgregar}
                             onPress={() => (this.props.navigation.navigate('NuevoIntegrante', this.state.idEquipo))}>
 
-                            <Icon name="plus" size={30} color='White' />
+                            <Icon name="plus" size={30} color='#FFFFFF' />
                         </TouchableOpacity>
                     </View>
                 )}
@@ -743,14 +735,14 @@ class DetalleIntegrante extends React.Component {
                                 data={selectGenero}
                                 save="value"
                                 defaultOption={
-                                    this.state.genero=='Masculino'? { key: 'Masculino', value: 'Masculino' } :
-                                    { key: 'Femenino', value: 'Femenino' }
+                                    this.state.genero == 'Masculino' ? { key: 'Masculino', value: 'Masculino' } :
+                                        { key: 'Femenino', value: 'Femenino' }
                                 }
                             />
                         </View>
                         <View style={styles.formControl}>
                             <Text style={styles.label}>Número de camisa:</Text>
-                            <TextInput mode="outlined" keyboardType='numeric' value={this.state.numCamisa}
+                            <TextInput mode="outlined" keyboardType='numeric' value={(this.state.numCamisa).toString()}
                                 onChangeText={(value) => { this.setState({ numCamisa: value }) }} />
                         </View>
                         <View style={styles.formControl}>

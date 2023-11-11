@@ -124,32 +124,27 @@ export default function ConsultaIp() {
             <ScrollView>
                 {resultados.length > 0 && (
                     <>
-                        <FlatList
-                            data={resultados.reverse()}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item, index }) => (
-                                <View style={styles.contenedorPrincipal}>
-                                    <Card>
-                                        <View style={styles.cardContainer}>
-                                            <View style={styles.contenedorImage}>
-                                                <Text variant="labelLarge" style={{ color: 'white' }}>{item.country}</Text>
-                                            </View>
-                                            <View style={styles.contenedorInfo}>
-                                                <Card.Content>
-                                                    <Text variant="bodyLarge">Tipo: <Text variant="labelLarge">{item.type}</Text> </Text>
-                                                    <Text variant="bodyLarge">Continente: <Text variant="labelLarge">{item.continent}</Text> </Text>
-                                                    <Text variant="bodyLarge">Codigo Pais: <Text variant="labelLarge">{item.country_code}</Text> </Text>
-                                                    <Text variant="bodyLarge">Region: <Text variant="labelLarge">{item.region}</Text> </Text>
-                                                    <Text variant="bodyLarge">Ciudad: <Text variant="labelLarge">{item.city}</Text> </Text>
-                                                    <Text variant="bodyLarge">Capital: <Text variant="labelLarge">{item.capital}</Text> </Text>
-                                                </Card.Content>
-                                            </View>
-
+                        {(resultados.reverse()).map((item, index) => (
+                            <View style={styles.contenedorPrincipal} key={index}>
+                                <Card>
+                                    <View style={styles.cardContainer}>
+                                        <View style={styles.contenedorImage}>
+                                            <Text variant="labelLarge" style={{ color: 'white' }}>{item.country}</Text>
                                         </View>
-                                    </Card>
-                                </View>
-                            )}
-                        />
+                                        <View style={styles.contenedorInfo}>
+                                            <Card.Content>
+                                                <Text variant="bodyLarge">Tipo: <Text variant="labelLarge">{item.type}</Text> </Text>
+                                                <Text variant="bodyLarge">Continente: <Text variant="labelLarge">{item.continent}</Text> </Text>
+                                                <Text variant="bodyLarge">Codigo Pais: <Text variant="labelLarge">{item.country_code}</Text> </Text>
+                                                <Text variant="bodyLarge">Region: <Text variant="labelLarge">{item.region}</Text> </Text>
+                                                <Text variant="bodyLarge">Ciudad: <Text variant="labelLarge">{item.city}</Text> </Text>
+                                                <Text variant="bodyLarge">Capital: <Text variant="labelLarge">{item.capital}</Text> </Text>
+                                            </Card.Content>
+                                        </View>
+                                    </View>
+                                </Card>
+                            </View>
+                        ))}
                     </>
                 )}
             </ScrollView>
