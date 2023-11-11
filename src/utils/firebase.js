@@ -1,0 +1,1 @@
+/* Aquí va la configuración de Firebase */
